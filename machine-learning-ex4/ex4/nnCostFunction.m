@@ -74,11 +74,13 @@ a3 = sigmoid(z3);
 %prepare y, eye matrix 10x10 -> vector per label
 y_vector = eye(num_labels)(y,:);
 
-%compute code
+%compute cost function
 J =  1 / m * sum(sum(-y_vector .* log(a3) - (1 - y_vector)  .* log(1 - a3)));
 
+%regularization parameter
+J_reg = lambda / (2 * m) * (sum(sum(Theta1(:,2:end).^2)) + sum(sum(Theta2(:,2:end).^2)));
 
-
+J = J + J_reg;
 
 
 
