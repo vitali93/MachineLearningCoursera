@@ -75,19 +75,27 @@ a3 = sigmoid(z3);
 y_vector = eye(num_labels)(y,:);
 
 %compute cost function
-J =  1 / m * sum(sum(-y_vector .* log(a3) - (1 - y_vector)  .* log(1 - a3)));
+J =  1 / m * sum(sum(-y_vector .* log(a3) - (1 - y_vector) .* log(1 - a3)));
 
 %regularization parameter
-J_reg = lambda / (2 * m) * (sum(sum(Theta1(:,2:end).^2)) + sum(sum(Theta2(:,2:end).^2)));
+J_reg = lambda / (2 * m) * (sum(sum(Theta1(:, 2:end).^2)) + sum(sum(Theta2(:, 2:end).^2)));
 
 J = J + J_reg;
 
+%Part 2
+%step2:
+delta3 = a3 - y_vector; 
+%step 3:
+delta2 = delta3 * Theta2 .* [ones(size(z2, 1), 1) sigmoidGradient(z2)];
+%step 4:
+D1 = delta2(:, 2:end)' * a1;
+D2 = delta3' * a2;
+%step 5:
+Theta1_grad += 1/m * D1;
+Theta2_grad += 1/m * D2;
 
-
-
-
-
-
+Theta1_grad(:,2:end) += (lambda/m) * (Theta1(:,2:end));
+Theta2_grad(:,2:end) += (lambda/m) * (Theta2(:,2:end));
 
 
 
