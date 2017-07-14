@@ -41,10 +41,10 @@ error_val = zeros(length(lambda_vec), 1);
 
 for i = 1:length(lambda_vec)
 	lambda = lambda_vec(i);
-	[theta] = trainLinearReg(X, y, lambda);
-	[J, grad] = linearRegCostFunction(X, y, theta, lambda);
+	theta = trainLinearReg(X, y, lambda);
+	[J, grad] = linearRegCostFunction(X, y, theta, 0);
+	[J_val, grad_val] = linearRegCostFunction(Xval, yval, theta, 0);
 	error_train(i) = J;
-	[J_val, grad_val] = linearRegCostFunction(Xval, yval, theta, lambda);
 	error_val(i) = J_val;
 end
 
